@@ -15,22 +15,36 @@ public class ClassesAndObjects {
         Person person1 = new Person();
         person1.name = "Roman";
         person1.age = 44;
-        System.out.println("My name is " + person1.name + ". I am " + person1.age +" years old.");
+
+        person1.speak();
 
         Person person2 = new Person();
         person2.name = "Ivan";
         person2.age = 40;
 
-        System.out.println("My name is " + person2.name + ". I am " + person2.age +" years old.");
+        person2.speak();
+        person2.sayHello();
+
     }
 }
 
 class Person{
     String name;
     int age;
+
+    // method for introducing. void - nothing will be returned (only printed in console some text)
+    void speak(){
+        System.out.println("My name is " + name + ". I am " + age +" years old.");
+    }
+
+    void sayHello(){
+        System.out.println("Hello");
+    }
+
 }
 
 //Output:
 //
 //        My name is Roman. I am 44 years old.
 //        My name is Ivan. I am 40 years old.
+//        Hello
