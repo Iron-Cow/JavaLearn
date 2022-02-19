@@ -1,12 +1,13 @@
 public class ClassesAndObjects {
     public static void main(String[] args) {
         Person person1 = new Person();
-        person1.name = "Roman";
+        person1.setName("Roman"); // call method with parameter
         person1.age = 44;
 
 
         Person person2 = new Person();
-        person2.name = "Ivan";
+        String p1_name = "Ivan";
+        person1.setName(p1_name); // variables are ok too
         person2.age = 40;
 
         person1.calculateYearsToRetirement();
@@ -26,18 +27,15 @@ class Person{
     String name;
     int age;
 
-//    void - nothing will be returned (only printed in console some text)
     void calculateYearsToRetirement(){
         int years = 65 - age;
         System.out.println("Years to retirement - " + years);
     }
 
-//    now the method will return int value, which can be used elsewhere
     int getYearsToRetirement(){
         int years = 65 - age;
-        return years; // immediately exit from the method (no lines after will not be executed)
+        return years;
     }
-    // method for introducing.
 
     void speak(){
         System.out.println("My name is " + name + ". I am " + age +" years old.");
@@ -45,6 +43,11 @@ class Person{
 
     void sayHello(){
         System.out.println("Hello");
+    }
+
+    //method with parameter
+    void setName(String newName/*, int age, ... any number of params allowed*/){
+        name = newName;
     }
 
 }
