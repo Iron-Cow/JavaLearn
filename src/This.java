@@ -1,19 +1,23 @@
 public class This {
     public static void main(String[] args) {
+        Human human1 = new Human("Billy", 18);
+        human1.setName("Tom"); // instance action
 
-//        constructor approach:
+        Human.description = "regular human"; // class variable (shared for all class instances)
+        Human.getDescription(); // regular human
 
-        Human human1 = new Human(); // Hello from first constructor
+        human1.getDescription(); // regular human
+        // (but IDE will show the warning - Static member 'Human.getDescription()' accessed via instance reference)
 
-        Human human2 = new Human("Bob"); // Hello from constructor 2
+        human1.getAllFields(); // Tom, 18, regular human
+        Human.printCurrentHumanPopulation(); // 1
 
-        Human human3 = new Human("Billy", 18); // Hello from constructor 3
+        Human human2 = new Human("Bob", 33);
+        human2.printCurrentHumanPopulation(); // 2
 
-//        same as:
-//        Human human3 = new Human();
-//        human3.setAge(18);
-//        human3.setName("Billy");
 
+        ///
+        Math.pow(2, 4); // another example of static method usage. Math - not instance, but class
     }
 }
 
@@ -21,24 +25,14 @@ class Human {
     String name;
     int age;
 
+    public static String description;
+    private static int humanPopulation = 0;
+
     // constructor; (name should be the same as class name). If constructor not defined - empty public Human(){} called
-    public Human(){
-        System.out.println("Hello from first constructor");
-        this.name = "Default name";
-        this.age = 0;
-    }
-
-    public Human(String name){
-        System.out.println("Hello from constructor 2");
-        this.name = name;
-        this.age = 0;
-    }
-
-//    method reload - method with same names but different entry params
     public Human(String name, int age){
-        System.out.println("Hello from constructor 3");
         this.name = name;
         this.age = age;
+        humanPopulation++; // increment static variable
     }
 
     public void setName(String name) {
@@ -59,5 +53,29 @@ class Human {
 
     public void getInfo() {
         System.out.println(name + ", " + age);
+    }
+
+    public void getAllFields(){
+        // we can use static variables here
+        System.out.println(name + ", " + age+ ", " + description);
+    }
+
+    // all above - object methods (all output and actions will be different). It uses own (this.) variables
+
+    // static methods. can be called by class (or instance) (Human.staticMethodName())
+    // and result will be the same (no own variables)
+
+    // static method:
+
+    public static void getDescription(){
+        System.out.println(description);
+    }
+
+    public static void printAllFields(){
+//        System.out.println(name); // not allowed (use this. attribute in static method)
+    }
+
+    public static void printCurrentHumanPopulation(){
+        System.out.println(humanPopulation);
     }
 }
