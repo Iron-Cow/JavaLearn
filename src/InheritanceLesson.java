@@ -9,14 +9,15 @@ public class InheritanceLesson {
 
         Dog dog = new Dog();
 
-        dog.eat();      // inherited method from Animal AND REWRITTEN to own logic
-        dog.sleep();    // inherited method from Animal
+        dog.eat();      // inherited method from Animal AND added new own logic
+        dog.sleep();    // inherited method from Animal AND added new own logic
         dog.bark();     // Dog('s) own method
         dog.showName(); // inherited attribute from Animal
 
 //        I am eating
 //        OM-NOM-NOM
 //        I am sleeping
+//        zzz                   // extra logic with overriding
 //        I am barking!
 //        some animal
     }
