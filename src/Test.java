@@ -1,10 +1,14 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Test {
+
+
     public static void main(String[] args) throws InterruptedException {
         Object object = new Object();
 
-        WaitAndNotify wn = new WaitAndNotify();
+        ProducerConsumer wn = new ProducerConsumer();
 
         Thread thread1 = new Thread(new Runnable() {
             @Override
@@ -35,29 +39,36 @@ public class Test {
     }
 }
 
-class WaitAndNotify{
+class ProducerConsumer {
+    private Queue<Integer> queue = new LinkedList<>();
+    private final int LIMIT = 10;
+    private final Object lock = new Object();
+
     public void produce() throws InterruptedException {
-        synchronized (this){
-            System.out.println("Producer thread started ...");
-            wait(); // this.wait()  // call on this. object
-                    // 1 - given intrinsic lock
-                    // 2 - waiting notify call on this. object
-//            wait(1000); // timeout of waiting ms
-//            someOtherObject.wait(); // not default wait call (on other object)
-            System.out.println("Producer thread resumed ...");
+        int value = 0;
+        while (true) {
+            synchronized (lock) {
+                while (queue.size() == LIMIT) {
+                    lock.wait();
+                }
+                queue.offer(value++);
+
+            }
         }
     }
-    public void consume() throws InterruptedException{
-        Thread.sleep(2000);
-        Scanner scanner = new Scanner(System.in);
-        synchronized (this){
-            System.out.println("Waiting for return key pressed ... ");
-            scanner.nextLine();
-            notify(); // awakening only 1 thread // does not give monitor if some code after notify appears
-//            notifyAll(); // awakening all waiting threads
-            Thread.sleep(2000);
-            System.out.println("Sleep for 2 seconds ... ");
 
+    public void consume() throws InterruptedException {
+        while (true){
+            synchronized (lock){
+                while (queue.size() == 0){
+                    lock.wait();
+                }
+                int value = queue.poll();
+                System.out.println(value);
+                System.out.println("Queue size " + queue.size());
+                lock.notify();
+            }
+            Thread.sleep(1000);
         }
     }
 
